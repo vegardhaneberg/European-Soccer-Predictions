@@ -1,14 +1,12 @@
 from Preprocessing import GetData
 import pandas as pd
 
-#path = '/Users/vegardhaneberg/PycharmProjects/SoccerGroupProject/Data/preprocessed_data.csv'
 path = '../Data/preprocessed_data.csv'
 
 
 def print_draw_predictions_betting_companies():
     """
     function that calculates the precentage of predicted draws from the betting companies
-    :param path: path: the path to the preprocessed data. If the provided preprocessed data is used: Data/preprocesses_data.csv
     :return: the percentage of draws
     """
     data = GetData.load_preprocessed_data()
@@ -23,7 +21,6 @@ def print_draw_predictions_betting_companies():
 def betting_accuracy():
     """
     function that reads all matches from the preprocessed data and calculates the betting companies accuracy
-    :param path: path: the path to the preprocessed data. If the provided preprocessed data is used: Data/preprocesses_data.csv
     :return: the accuracy of the betting companies
     """
     data = GetData.load_preprocessed_data()
@@ -46,7 +43,6 @@ def betting_accuracy():
 def win_statistics():
     """
     function that reads all matches and calculates the percentage of home wins, draws and away wins
-    :param path: the path to the preprocessed data. If the provided preprocessed data is used: Data/preprocesses_data.csv
     :return: a list with the percentage of home wins, draws and away wins
     """
     data = GetData.load_preprocessed_data()

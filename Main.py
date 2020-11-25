@@ -12,71 +12,8 @@ from sklearn.model_selection import train_test_split
 import random
 
 
-def optimal_pca_components():
-    """
-    function that finds the optimal number of components in the pca analysis
-    """
-
-    data = GetData.load_preprocessed_data('../Data/processed_data_10_features.csv')
-    target_feature = 'match_result'
-
-    accuracies = []
-
-    for components in range(1, 6):
-        pca_df = PCA.pca(data, target_feature, components)
-
-        list_data = GetData.convert_df_to_lists(pca_df)
-
-        neural_net = TwoLayerNeuralNetwork.neural_network(list_data, components)
-
-        accuracies.append(neural_net)
-
-    print(accuracies)
-
-
-def run_all_models(input_vector, output_vector):
-    random_state = random.randint(1, 10)
-    print(random_state)
-    x_train, x_test, y_train, y_test = train_test_split(input_vector, output_vector, test_size=0.25, random_state=random_state)
-
-    # Creating and training the models without pca
-    print('Creating and training SVM')
-    svm_acc = SVM.support_vector_machine(x_train, x_test, y_train, y_test)
-
-    y_train = GetData.convert_output_vector_to_nn_format(y_train)
-    y_test = GetData.convert_output_vector_to_nn_format(y_test)
-    print('Creating and training neural networks')
-    neural_net_acc = TwoLayerNeuralNetwork.neural_network(x_train, x_test, y_train, y_test, 13)
-    neural_net_sigmoid_acc = TwoLayerNeuralNetwork.neural_network_sigmoid(x_train, x_test, y_train, y_test, 13)
-    neural_net_huge_acc = TwoLayerNeuralNetwork.huge_neural_network(x_train, x_test, y_train, y_test, 13)
-    neural_net_shallow_acc = TwoLayerNeuralNetwork.shallow_neural_network(x_train, x_test, y_train, y_test, 13)
-
-    # Creating and training the models with pca
-    df = GetData.create_df_from_two_lists([input_vector, output_vector])
-
-    pca_df = PCA.pca(df, 'match_result', 2)
-
-    list_data = GetData.convert_df_to_lists(pca_df, False)
-    x_train, x_test, y_train, y_test = train_test_split(list_data[0], list_data[1], test_size=0.25, random_state=random_state)
-
-    print('Creating and training SVM with PCA')
-    svm_pca_acc = SVM.support_vector_machine(x_train, x_test, y_train, y_test)
-
-    y_train = GetData.convert_output_vector_to_nn_format(y_train)
-    y_test = GetData.convert_output_vector_to_nn_format(y_test)
-    print('Creating and training neural network with PCA')
-    neural_net_pca_acc = TwoLayerNeuralNetwork.neural_network(x_train, x_test, y_train, y_test, 2)
-
-    # Presenting the results
-    models = ['Neural Network', 'Neural Network sigmoid', 'Neural Network huge', 'Neural Network shallow',
-              'Support Vector Machine', 'SVM PCA', 'Neural Network PCA']
-    accuracies = [neural_net_acc, neural_net_sigmoid_acc, neural_net_huge_acc, neural_net_shallow_acc,
-                  svm_acc, svm_pca_acc, neural_net_pca_acc]
-    ModelAccuracyPlot.present_results(models, accuracies)
-
-
-def run_all_models_from_preprocessed_data(path):
-    data = GetData.load_preprocessed_data(path)
+def run_all_models_from_preprocessed_data():
+    data = GetData.load_preprocessed_data()
     data = data.drop(['avg_home_win_odds', 'avg_draw_odds', 'avg_away_win_odds'], axis=1)
 
     input_vector, output_vector = GetData.convert_df_to_lists(data, False)
@@ -305,7 +242,6 @@ def run_best_ann_and_svm_from_preprocessed_data():
 
 
 def main():
-    path = 'Enter/Your/Path/Here'
     run_best_ann_and_svm_from_preprocessed_data()
     #run_best_ann_and_svm_from_raw_data()
 
