@@ -1,0 +1,8 @@
+pip==20.0.2
+plotly
+matplotlib
+seaborn
+pandas
+sklearn
+numpy
+tensorflow
