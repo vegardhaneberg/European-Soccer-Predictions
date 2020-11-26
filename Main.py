@@ -243,8 +243,8 @@ def run_best_ann_and_svm_from_preprocessed_data():
 
 
 def main():
-    #run_best_ann_and_svm_from_preprocessed_data()
-    run_best_ann_and_svm_from_raw_data()
+    run_best_ann_and_svm_from_preprocessed_data()
+    #run_best_ann_and_svm_from_raw_data()
 
 
 if __name__ == '__main__':
