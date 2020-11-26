@@ -144,8 +144,6 @@ def run_best_ann_and_svm(data):
     :param data: dataframe containing the preprocessed data
     """
     state = random.randint(1, 10)
-    #data = GetData.load_preprocessed_data(path)
-    data = data.drop(['avg_home_win_odds', 'avg_draw_odds', 'avg_away_win_odds'], axis=1)
 
     input_vector, output_vector = GetData.convert_df_to_lists(data, False)
 
@@ -230,6 +228,8 @@ def run_best_ann_and_svm_from_raw_data():
     function that runs the best neural network and svm without preprocessed data
     """
     data = GetData.preprocessing()
+    data = GetData.create_df_from_two_lists(data, odds=True)
+    data = data.drop(['avg_home_win_odds', 'avg_draw_odds', 'avg_away_win_odds'], axis=1)
     run_best_ann_and_svm(data)
 
 
@@ -238,12 +238,13 @@ def run_best_ann_and_svm_from_preprocessed_data():
     function that runs the best neural network and svm from preprocessed data
     """
     data = GetData.load_preprocessed_data()
+    data = data.drop(['avg_home_win_odds', 'avg_draw_odds', 'avg_away_win_odds'], axis=1)
     run_best_ann_and_svm(data)
 
 
 def main():
-    run_best_ann_and_svm_from_preprocessed_data()
-    #run_best_ann_and_svm_from_raw_data()
+    #run_best_ann_and_svm_from_preprocessed_data()
+    run_best_ann_and_svm_from_raw_data()
 
 
 if __name__ == '__main__':

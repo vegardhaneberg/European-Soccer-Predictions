@@ -332,16 +332,22 @@ def store_preprocessed_data(lists, filename):
     df.to_csv('Data/' + filename, index=False)
 
 
-def create_df_from_two_lists(lists):
+def create_df_from_two_lists(lists, odds=False):
     """
-    functino that creates a dataframe from two lists
+    function that creates a dataframe from two lists
     :param lists: a list containing two lists with the preprocessed data
     :return: a dataframe with the same data as the two lists
     """
-    column_names = ['avg_last_home_team_wins',
-                   'avg_last_away_team_wins', 'home_team_scored_goals', 'away_team_scored_goals',
-                   'home_team_conceded_goals', 'away_team_conceded_goals', 'home_team_encounter_wins',
-                   'away_team_encounter_wins', 'avg_home_rating', 'avg_away_rating', 'match_result']
+    if odds:
+        column_names = ['avg_home_win_odds', 'avg_draw_odds', 'avg_away_win_odds', 'avg_last_home_team_wins',
+                        'avg_last_away_team_wins', 'home_team_scored_goals', 'away_team_scored_goals',
+                        'home_team_conceded_goals', 'away_team_conceded_goals', 'home_team_encounter_wins',
+                        'away_team_encounter_wins', 'avg_home_rating', 'avg_away_rating', 'match_result']
+    else:
+        column_names = ['avg_last_home_team_wins',
+                        'avg_last_away_team_wins', 'home_team_scored_goals', 'away_team_scored_goals',
+                        'home_team_conceded_goals', 'away_team_conceded_goals', 'home_team_encounter_wins',
+                          'away_team_encounter_wins', 'avg_home_rating', 'avg_away_rating', 'match_result']
 
     first_list = lists[0]
     second_list = lists[1]
